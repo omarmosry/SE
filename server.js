@@ -39,3 +39,4 @@ app.use(function(req, res, next) {
 
 // Create HTTP Server and Listen for Requests
 app.listen(3000);
+console.log("Running on server 3000");
