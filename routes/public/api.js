@@ -27,6 +27,7 @@ module.exports = function (app) {
       roleid: roles.user,
     };
     try {
+      console.log(newUser);
       const user = await db("se_project.users").insert(newUser).returning("*");
 
       return res.status(200).json(user);
