@@ -111,6 +111,17 @@ async function uploadR() {
 
   }
 }
+
+
+const rr = require('../constants/roles');
+async function uploadRoles() {
+  let roles = Object.values(rr); 
+
+  for (let i = 0; i < roles.length; i++) {
+    const element = roles[i];
+    await db("se_project.roles").insert(element).returning("*");
+  }
+}
 // uploadS(); 
 // first to run
 
@@ -119,3 +130,6 @@ async function uploadR() {
 
 // uploadSR(); 
 // third
+
+// uploadRoles()
+// forth

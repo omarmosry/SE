@@ -22,7 +22,9 @@ module.exports = async function(req, res, next) {
     return res.status(301).redirect('/');
   }
   
+  const user = await db.select('*').from('se_project.users').where('id', userSession.userid).first();
   req.userid = userSession.userid;
+  req.user = user;
   // If all checks have passed, we can consider the user authenticated and
   next();
 };

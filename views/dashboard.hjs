@@ -28,7 +28,7 @@
           </ul>
        </nav>
       </div>
-      <p>Welcome {{firstName}}, you are logged in!</p>
+      <p>Welcome {{firstname}}, you are logged in!</p>
     </div>
   </body>
   </html>

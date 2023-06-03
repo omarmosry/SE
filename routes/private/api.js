@@ -54,6 +54,35 @@ const checkPrice = (noOfStations) => {
 
 module.exports = function (app) {
   // example
+  app.post("/api/v1/user", async function (req, res) {
+
+    // Check if user already exists in the system
+    const userExists = await db
+      .select("*")
+      .from("se_project.users")
+      .where("email", req.body.email);
+    if (!isEmpty(userExists)) {
+      return res.status(400).send("user exists");
+    }
+
+    const newUser = {
+      firstname: req.body.firstName,
+      lastname: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      roleid: roles.user,
+    };
+    try {
+      console.log(newUser);
+      const user = await db("se_project.users").insert(newUser).returning("*");
+
+      return res.status(200).json(user);
+    } catch (e) {
+      console.log(e.message);
+      return res.status(400).send("Could not register user");
+    }
+  });
+  
   app.get("/api/v1/users", async function (req, res) {
     try {
       //  const user = await getUser(req);

@@ -13,7 +13,7 @@
     <div>
       <nav class="navbar navbar-inverse" style="padding-left:130px;">
           <ul class="nav navbar-nav">
-          <li><a href="/">Home</a></li>
+          <li><a href="/dashboard">Home</a></li>
           <li><a href="/stations_example">Station</a></li>
             <li><a href="/users">Users</a></li>
             <li><a href="/users/add">Add Users</a></li>

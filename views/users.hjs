@@ -27,20 +27,31 @@
             <th scope="col">id</th>
             <th scope="col">First</th>
             <th scope="col">Last</th>
-            <th scope="col">Major</th>
+            <th scope="col">Email</th>
             <th scope="col">Role</th>
+            <th scope="col">Actions</th>
           </tr>
           {{#users}}
             <tr>
               <td>{{id}}</td>
-              <td>{{firstName}}</td>
-              <td>{{lastName}}</td>
-              <td>{{major}}</td>
-              <td>{{roleId}}</td>
+              <td>{{firstname}}</td>
+              <td>{{lastname}}</td>
+              <td>{{email}}</td>
+              <td>{{roleid}}</td>
+              <td>
+                <button onclick="deleteUser({{id}})">Delete</button>
+                <a href="/users/edit/{{id}}">Edit</a>
+              </td>
             </tr>
           {{/users}}
         </thead>
       </table>
     </div>
+    <script>
+      function deleteUser(userId) {
+        console.log(userId)
+        // TODO: Delete
+      }
+    </script>
   </body>
   </html>
