@@ -4,8 +4,10 @@ async function uploadSR() {
   let SR = [
     { stationid: 1, routeid: 1 },
     { stationid: 1, routeid: 2 },
+    { stationid: 2, routeid: 1 },
     { stationid: 2, routeid: 2 },
-    { stationid: 2, routeid: 3 },
+    { stationid: 2, routeid: 3},
+    { stationid: 2, routeid: 4 },
     { stationid: 3, routeid: 3 },
     { stationid: 3, routeid: 4 },
     { stationid: 3, routeid: 5 },
@@ -22,10 +24,15 @@ async function uploadSR() {
     { stationid: 6, routeid: 8 },
     { stationid: 6, routeid: 11 },
     { stationid: 6, routeid: 12 },
+    { stationid: 7, routeid: 11 },
+    { stationid: 7, routeid: 12 },
   ];
   for (let i = 0; i < SR.length; i++) {
     const element =SR[i];
+
     await db("se_project.stationroutes").insert(element).returning("*");
+    console.log(element)
+
   }
 
 }
@@ -77,7 +84,10 @@ async function uploadS() {
 
   for (let i = 0; i < stations.length; i++) {
     const element =stations[i];
+    console.log(element)
     await db("se_project.stations").insert(element).returning("*");
+
+
   }
 }
 async function uploadR() {
@@ -95,12 +105,16 @@ async function uploadR() {
       { routename: "hi76", fromstationid: 7, tostationid: 6 },
       { routename: "hi67", fromstationid: 6, tostationid: 7 },
     ];
-  
+ 
   for (let i = 0; i < routes.length; i++) {
     const element =routes[i];
     await db("se_project.routes").insert(element).returning("*");
+
   }
 }
-//uploadS(); first to run
-//uploadR(); second
-//uploadSR(); third
+
+
+
+//uploadS(); 
+//uploadR(); 
+//uploadSR();
