@@ -8,10 +8,10 @@ const config = {
   client: 'pg',
   connection: {
     host: 'localhost',
-    port: 5434,
+    port: 5432,
     user: 'postgres',
-    password: 'youssef2003',
-    database: 'mydatabase',
+    password: 'admin',
+    database: 'postgres',
   }
 };
 
