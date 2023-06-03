@@ -42,7 +42,7 @@ const checkPrice = (noOfStations) => {
   // 0-9 5 pounds
   // 10-16 7 pounds
   // 16+ 10 pounds
-  
+
   if(noOfStations < 10) {
     return noOfStations * 5
   } else if(noOfStations < 17) {
@@ -115,9 +115,9 @@ module.exports = function (app) {
       status : req.body.refundstatus
     }
   
-    try{
-      const request=await db("se_project.refund_requests").update(newStatus).where("id",requestId).returning("*");
-      
+    try {
+      const request = await db("se_project.refund_requests").update(newStatus).where("id",requestId).returning("*");
+
       
       return res.status(200).json("updated refund status");
   
@@ -182,6 +182,53 @@ module.exports = function (app) {
 
     return res.status(200).send({
       price: checkPrice(numberOfStations.length)
+    });
+  });
+
+  app.put("/api/v1/ride/simulate", async function (req, res) {
+    const {
+      origin,
+      destination,
+      tripDate
+    } = req.body;
+    
+    const stationRoutes = await db.select('*').from("se_project.stationroutes")
+    const routeStations = stationRoutes.reduce((prev, {
+      stationid,
+      routeid
+    }) => {
+      prev[routeid] = [...(prev[routeid] || []), stationid];
+      return prev
+    }, {})
+
+    const staionStaions = stationRoutes.reduce((prev, {
+      stationid,
+      routeid
+    }) => {
+      prev[stationid] = [...new Set([...(prev[stationid] || []), ...routeStations[routeid]])];
+      return prev
+    }, {})
+
+    const route = new Graph()
+    Object.entries(staionStaions).forEach(([key, value = []]) => {
+      route.addNode(key, value.reduce((prev, current) => {
+        prev[current] = 1
+        return prev
+      }, {}))
+    })
+
+    const ss = route.path(origin, destination);
+    const ride = await db("se_project.rides").update({
+      status: "completed"
+    }).where({
+      origin,
+      destination,
+      tripdate: tripDate
+    }).returning("*");
+
+    return res.status(200).send({
+      stations: ss,
+      ride
     });
   });
 
