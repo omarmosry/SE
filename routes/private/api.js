@@ -39,6 +39,10 @@ const getUser = async function (req) {
 };
 
 const checkPrice = (noOfStations) => {
+  // 0-9 5 pounds
+  // 10-16 7 pounds
+  // 16+ 10 pounds
+  
   if(noOfStations < 10) {
     return noOfStations * 5
   } else if(noOfStations < 17) {
@@ -148,11 +152,7 @@ module.exports = function (app) {
       originId,
       destinationId
     } = req.params;
-
     
-    // 0-9 5 pounds
-    // 10-16 7 pounds
-    // 16+ 10 pounds
     const stationRoutes = await db.select('*').from("se_project.stationroutes")
     const routeStations = stationRoutes.reduce((prev, {
       stationid,
