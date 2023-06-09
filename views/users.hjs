@@ -9,18 +9,18 @@
   </head>
   <body>
     <div>
-    <div>
-    <nav class="navbar navbar-inverse" style="padding-left:130px;">
-      <ul class="nav navbar-nav">
-        <li><a href="/dashboard">Home</a></li>
-        <li><a href="/stations_example">Stations</a></li>
-        <li class="active"><a href="/users">Users</a></li>
-        <li><a href="/users/add">Add Users</a></li>
-        <li><a href="/">Logout</a></li>  
-      </ul>
-  </nav>
-  </div>
-    <br/>
+      <div>
+        <nav class="navbar navbar-inverse" style="padding-left:130px;">
+          <ul class="nav navbar-nav">
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="/stations_example">Stations</a></li>
+            <li class="active"><a href="/users">Users</a></li>
+            <li><a href="/users/add">Add Users</a></li>
+            <li><a href="/">Logout</a></li>  
+          </ul>
+        </nav>
+      </div>
+      <br/>
       <table class="table">
         <thead>
           <tr>
@@ -31,27 +31,44 @@
             <th scope="col">Role</th>
             <th scope="col">Actions</th>
           </tr>
-          {{#users}}
-            <tr>
-              <td>{{id}}</td>
-              <td>{{firstname}}</td>
-              <td>{{lastname}}</td>
-              <td>{{email}}</td>
-              <td>{{roleid}}</td>
-              <td>
-                <button onclick="deleteUser({{id}})">Delete</button>
-                <a href="/users/edit/{{id}}">Edit</a>
-              </td>
-            </tr>
-          {{/users}}
         </thead>
+        <tbody>
+          {{#users}}
+          <tr data-id="{{id}}">
+            <td>{{id}}</td>
+            <td>{{firstname}}</td>
+            <td>{{lastname}}</td>
+            <td>{{email}}</td>
+            <td>{{roleid}}</td>
+            <td>
+              <button onclick="deleteUser('{{id}}')">Delete</button>
+              <a href="/users/edit/{{id}}">Edit</a>
+            </td>
+          </tr>
+          {{/users}}
+        </tbody>
       </table>
     </div>
     <script>
       function deleteUser(userId) {
-        console.log(userId)
-        // TODO: Delete
+        console.log(userId);
+        
+        // Send a DELETE request to the server
+        $.ajax({
+          url: '/users/' + userId,
+          type: 'DELETE',
+          success: function (result) {
+            // Handle the success response, such as removing the deleted row from the table
+            console.log('User deleted successfully.');
+            // Assuming you want to remove the deleted row from the table:
+            $('tr[data-id="' + userId + '"]').remove();
+          },
+          error: function (xhr, status, error) {
+            // Handle the error response
+            console.log('Error deleting user: ' + error);
+          }
+        });
       }
     </script>
   </body>
-  </html>
+</html>

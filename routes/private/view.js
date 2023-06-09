@@ -55,4 +55,25 @@ module.exports = function(app) {
     return res.render('edit-user', { ...user });
   });
 
+  app.get("/password/reset", async function (req, res) {
+    const{newPassword}= req.params;
+    const user = await db. select('*').from("se_project.users").where('id', req.userid).update('password', newPassword)
+    console.log()
+    return res.render('resetPass', { ...user });
+  });
+   app.get ("/api/v1/payment/ticket", async function (req, res){
+    const {purchasedId, creditCardNumber, holderName, amount, origin, destination,tripDate}= req.body;
+    const ticket = await db.select('*').from("se_project.ticket").where('id', req.params)
+    return res.render('resetPass', { ...user });
+   
+
+
+   });
+   app.get('/manage/zones', async function(req, res) {
+    const zones = await db.select('*').from('se_project.zones');
+    return res.render('manage-zones', { zones });
+  });
 };
+
+
+

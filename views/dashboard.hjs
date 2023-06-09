@@ -25,6 +25,7 @@
             <li><a href="/users">Users</a></li>
             <li><a href="/users/add">Add Users</a></li>
             <li><a href="/">Logout</a></li>
+            <li><a href="/password/reset">resetPassword</a></li>
           </ul>
        </nav>
       </div>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manage Zones</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function updateZonePrice(zoneId) {
+      // Get the new price value from the input field
+      var newPrice = document.getElementById('price_' + zoneId).value;
+
+      // Send the PUT request to the API
+      $.ajax({
+        url: '/api/v1/zones/' + zoneId,
+        type: 'PUT',
+        data: { price: newPrice },
+        success: function(response) {
+          // Display success message
+          alert(response.message);
+        },
+        error: function(error) {
+          // Display error message
+          alert(error.responseJSON.error);
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <h1>Manage Zones</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Zone Type</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% zones.forEach(function(zone) { %>
+        <tr>
+          <td><%= zone.id %></td>
+          <td><%= zone.zonetype %></td>
+          <td>
+            <input type="text" id="price_<%= zone.id %>" value="<%= zone.price %>">
+          </td>
+          <td>
+            <button onclick="updateZonePrice(<%= zone.id %>)">Update</button>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>
